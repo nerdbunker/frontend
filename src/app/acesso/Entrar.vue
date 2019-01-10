@@ -6,32 +6,53 @@
           <v-card-text>
             <v-form>
               <v-text-field
-              v-model="username"
+              v-model="loginInput.email"
               prepend-icon="person"
               name="username"
               label="Usuário"
               type="text"
-              autofocus="true"
-              color="blue"
+              autofocus
+              color="red"
               ></v-text-field>
               <!--  -->
               <v-text-field
-              id="senha"
+              v-model="loginInput.senha"
               prepend-icon="lock"
               name="senha"
               label="Senha"
               type="password"
-              color="blue"
+              color="red"
               ></v-text-field>
             </v-form>
           </v-card-text>
           <!--  -->
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn pa-2 to="/tribo" color="blue" flat>Entrar</v-btn>
+            <v-btn pa-2 to="/tribo" v-show="loginInput.email && loginInput.senha" color="red" @click="fazerLogin" flat>Entrar</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
+
+<script>
+import AutenticacaoAPI from '../../domain/services/AutenticacaoAPI'
+export default {
+  data () {
+    return {
+      loginInput: {
+        email: '',
+        senha: ''
+      }
+    }
+  },
+  methods: {
+    fazerLogin () {
+      AutenticacaoAPI.entrar(this.loginInput).then(resposta => {
+        console.log(resposta.data)
+      })
+    }
+  }
+}
+</script>

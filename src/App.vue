@@ -8,7 +8,11 @@
         fixed app width="200"
       >
         <v-list>
-            <img src="../static/icones/viceri.png" class="logo" alt="">
+          <v-flex class="bg-white">
+            <router-link to="/">
+              <img src="../static/icones/logo.png" class="logo" alt="">
+            </router-link>
+          </v-flex>
           <v-divider></v-divider>
           <v-list-tile
             value="true"
@@ -33,7 +37,7 @@
         color="viceri"
         app
       >
-        <v-toolbar-side-icon aria-label="menu" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-side-icon class="white--text" aria-label="menu" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-list-tile-title text-xs-center class="titulo">
           {{ titulo }}
         </v-list-tile-title>
@@ -63,10 +67,9 @@ export default {
       titulo: 'VICELULAS',
       items: [
         { icon: 'home', title: 'Organismo', to: '/' },
-        { icon: 'loyalty', title: 'Valores', to: '/valores' },
+        // { icon: 'loyalty', title: 'Valores', to: '/valores' },
         { icon: 'photo', title: 'Fotos da Viceri', to: '/viceri' },
-        // { icon: 'folder', title: 'Documentos', to: '/documentos' },
-        // { icon: 'person', title: 'Pessoas', to: '/pessoas' },
+        { icon: 'folder', title: 'Documentos', to: '/documentos' },
         { icon: 'info', title: 'Dúvidas', to: '/duvidas' },
         { icon: 'developer_mode', title: 'Suporte', to: '/suporte' },
         { icon: 'fingerprint', title: 'Entrar', to: '/entrar' }
@@ -80,11 +83,14 @@ export default {
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css');
 @import url('https://fonts.googleapis.com/css?family=Play');
 
-.bg {
+/* .bg {
   background-image: url('../static/backgrounds/bg.png');
   background-attachment: fixed;
   background-size: cover;
-}
+} */
+/* .bg-white {
+  background-color: azure;
+} */
 #inspire {
   font-family: 'Play', sans-serif;
   background: none;

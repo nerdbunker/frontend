@@ -18,12 +18,14 @@
                   <v-container grid-list-md>
                     <v-layout wrap>
                       <v-flex xs12 sm12 md12>
-                        <v-text-field v-model="editedItem.nome" label="Nome da Squad"></v-text-field>
+                        <v-text-field v-model="squadInsert.nome" label="Nome da Squad"></v-text-field>
                       </v-flex>
                       <v-flex xs12 sm12 md12>
                         <v-select
-                          :items="items"
-                          v-model="editedItem.nomeTribo"
+                          item-text="nome"
+                          item-value="id"
+                          :items="listaTribos"
+                          v-model="squadInsert.id_Tribo"
                           label="Tribo"
                         ></v-select>
                       </v-flex>
@@ -34,19 +36,21 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" flat @click="close">Cancelar</v-btn>
-                  <v-btn color="blue darken-1" flat @click="save">Salvar</v-btn>
+                  <v-btn color="blue darken-1" v-show="squadInsert.nome && squadInsert.id_Tribo" flat @click="save">Salvar</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
           </v-toolbar>
           <v-data-table
             :headers="headers"
-            :items="squads"
+            :items="listaSquads"
             class="elevation-1"
           >
             <template slot="items" slot-scope="props">
+              <th>{{ props.item.id }}</th>
               <td>{{ props.item.nome }}</td>
               <td>{{ props.item.nomeTribo }}</td>
+              <td>{{ props.item.ativo?'Sim':'Não' }}</td>
               <td>
               <v-icon
                 small
@@ -74,29 +78,37 @@
 </template>
 
 <script>
-import Squads from '../../../domain/services/Squads'
+import SquadsAPI from '../../../domain/services/SquadsAPI'
+import TribosAPI from '../../../domain/services/TribosAPI'
 
 export default {
   data: () => ({
     dialog: false,
-    squads: [],
+    listaSquads: [],
+    listaTribos: [],
     headers: [
-      {
-        text: 'Nome',
-        align: 'left',
-        sortable: true,
-        value: 'nome'
-      },
-      { text: 'Tribo', value: 'tribo' },
-      { text: 'Ações', value: 'nome' }
+      { text: 'ID', value: 'id' },
+      { text: 'Nome', value: 'nome' },
+      { text: 'Tribo', value: 'nomeTribo' },
+      { text: 'Ativo?', value: 'ativo', sortable: false },
+      { text: 'Ações', value: 'nome', sortable: false }
     ],
     editedIndex: -1,
-    editedItem: {
+    squadInsert: {
       nome: '',
-      nomeTribo: ''
+      id_Tribo: ''
+    },
+    squadInput: {
+      id: '',
+      nome: '',
+      id_Tribo: '',
+      nomeTribo: '',
+      ativo: ''
     },
     defaultItem: {
+      id: '',
       nome: '',
+      id_Tribo: '',
       nomeTribo: ''
     }
   }),
@@ -118,44 +130,78 @@ export default {
   },
 
   methods: {
+    limpaInsert () {
+      this.squadInsert.id = ''
+      this.squadInsert.nome = ''
+      this.squadInsert.id_Tribo = ''
+    },
+    listarSquads () {
+      this.initialize()
+      SquadsAPI.obterSquad().then(respostaSquads => {
+        console.log(respostaSquads.data)
+        this.listaSquads = respostaSquads.data
+      })
+    },
+    defineInsert (dados) {
+      this.squadInsert.id = dados.id
+      this.squadInsert.nome = dados.nome
+      this.squadInsert.id_Tribo = dados.id_Tribo
+    },
+    retornaValores (dados) {
+      this.squadInput.id = dados.id
+      this.squadInput.nome = dados.nome
+      this.squadInput.id_Tribo = dados.id_Tribo
+      this.squadInput.nomeTribo = dados.nomeTribo
+      this.squadInput.ativo = dados.ativo
+    },
     initialize () {
-      this.squads = []
+      this.listaSquads = []
     },
 
     editItem (item) {
       // Alterar aqui o this.pessoas
-      this.editedIndex = this.squads.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+      this.editedIndex = this.listaSquads.indexOf(item)
+      this.defineInsert(item)
       this.dialog = true
     },
 
     deleteItem (item) {
-      const index = this.pessoas.indexOf(item)
-      confirm('Tem certeza que deseja desativar esta Pessoa?') &&
-        this.pessoas.splice(index, 1)
+      let msg = 'Tem certeza que deseja desativar esta squad?'
+      if (item.ativo === false) {
+        msg = 'Tem certeza que deseja ativar esta squad?'
+      }
+      if (confirm(msg)) {
+        SquadsAPI.mudarAtivoSquad(item.id).then(() => {
+          this.listarSquads()
+        })
+      }
     },
-
     close () {
+      this.limpaInsert()
       this.dialog = false
       setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
+        this.squadInput = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
       }, 300)
     },
-
     save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.squads[this.editedIndex], this.editedItem)
+        SquadsAPI.alterarSquad(this.squadInsert.id, this.squadInsert).then(() => {
+          this.listarSquads()
+          this.close()
+        })
       } else {
-        this.squads.push(this.editedItem)
+        SquadsAPI.inserirSquad(this.squadInsert).then(() => {
+          this.listarSquads()
+          this.close()
+        })
       }
-      this.close()
     }
   },
   mounted () {
-    Squads.obterSquad().then(respostaSquad => {
-      console.log(respostaSquad)
-      this.squads = respostaSquad.data
+    this.listarSquads()
+    TribosAPI.obterTribo().then(respostaTribo => {
+      this.listaTribos = respostaTribo.data
     })
   }
 }
