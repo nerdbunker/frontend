@@ -41,6 +41,8 @@
         <v-list-tile-title text-xs-center class="titulo">
           {{ titulo }}
         </v-list-tile-title>
+        <v-spacer></v-spacer>
+        <v-icon>mdi-exit-to-app</v-icon>
       </v-toolbar>
       <!-- Conteúdo -->
       <v-content>
@@ -80,7 +82,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css');
 @import url('https://fonts.googleapis.com/css?family=Play');
 
 /* .bg {
