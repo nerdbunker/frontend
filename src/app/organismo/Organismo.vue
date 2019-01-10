@@ -10,7 +10,7 @@
             {{ avisoLegenda }}
           </v-chip>
         </v-flex>
-        <v-flex pt-3 md8 xs12>
+        <v-flex pt-3 md5 xs12>
           <!-- Icones das Tribos -->
           <v-flex
             v-for="tribo in listaTribos"
@@ -40,7 +40,7 @@
             :key="squad.id + 150"
             class="flex"
           >
-            <router-link :to="{ name: 'Tribos', params: { id: squad.id }}">
+            <router-link :to="{ name: 'SquadsSemTribo', params: { id: squad.id }}">
               <!-- SVG Dinamico, cria as imagens conforme a API fornece dados -->
               <svg class="zoom" height="100px" width="100px" xmlns="http://www.w3.org/2000/svg">
                 <!-- Imagem de Fundo - Célula -->
@@ -104,8 +104,6 @@ export default {
 </script>
 
 <style scoped>
-/* @import url('https://fonts.googleapis.com/css?family=Kalam:700'); */
-
 a {
   text-decoration: none;
   text-transform: uppercase;
