@@ -10,7 +10,7 @@
             {{ avisoLegenda }}
           </v-chip>
         </v-flex>
-        <v-flex pt-3 md5 xs12>
+        <v-flex pt-3 md6 xs12>
           <!-- Icones das Tribos -->
           <v-flex
             v-for="tribo in listaTribos"
