@@ -50,6 +50,7 @@
             <template slot="items" slot-scope="props">
               <th>{{ props.item.id }}</th>
               <td>{{ props.item.nome }}</td>
+              <td>{{ props.item.nomeMentor }}</td>
               <td>{{ props.item.ativo?'Sim':'Não' }}</td>
               <td>
               <v-icon
@@ -98,6 +99,7 @@ export default {
     headers: [
       { text: 'ID', value: 'id' },
       { text: 'Nome', value: 'nome' },
+      { text: 'Mentor', value: 'mentor' },
       { text: 'Ativo?', value: 'ativo', sortable: false },
       { text: 'Ações', value: 'acoes', sortable: false }
     ],
@@ -134,7 +136,7 @@ export default {
 
   methods: {
     chamarErro (mensagem) {
-      this.aviso.ativo = true,
+      this.aviso.ativo = true
       this.aviso.mensagem = mensagem
       this.limpaInsert()
       this.close()

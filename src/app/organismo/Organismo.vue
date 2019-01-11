@@ -25,34 +25,11 @@
                 <!-- Titulo -->
                 <text
                   x="50%" y="50%" class="fundo"
-                  fill="black"
+                  fill="yellow"
                   dominant-baseline="middle" text-anchor="middle"
                   font-size="100%"
                 >
                   {{ tribo.nome }}
-                </text>
-              </svg>
-            </router-link>
-          </v-flex>
-          <!-- Icones das Squads -->
-          <v-flex
-            v-for="squad in listaSquadSemTribo"
-            :key="squad.id + 150"
-            class="flex"
-          >
-            <router-link :to="{ name: 'SquadsSemTribo', params: { id: squad.id }}">
-              <!-- SVG Dinamico, cria as imagens conforme a API fornece dados -->
-              <svg class="zoom" height="100px" width="100px" xmlns="http://www.w3.org/2000/svg">
-                <!-- Imagem de Fundo - Célula -->
-                <image :xlink:href="img" x="0" y="0" height="100%" width="100%"></image>
-                <!-- Titulo -->
-                <text
-                  x="50%" y="50%" class="fundo"
-                  fill="black"
-                  dominant-baseline="middle" text-anchor="middle"
-                  font-size="100%"
-                >
-                  {{ squad.nome }}
                 </text>
               </svg>
             </router-link>
@@ -80,8 +57,7 @@ export default {
       avisoLegenda: 'Tribos e Squads do Organismo Viceri',
       img: require('../../../static/icones/cell.png'),
       listaPessoas: [],
-      listaTribos: [],
-      listaSquadSemTribo: []
+      listaTribos: []
     }
   },
   // Requisições e Retornos da API para Pessoas, Tribos e Squads
@@ -95,9 +71,6 @@ export default {
     })
     SquadsAPI.obterSquad().then(respostaSquad => {
       this.listaSquads = respostaSquad.data
-    })
-    SquadsAPI.obterSquadSemTribo().then(respostaSquadSemTribo => {
-      this.listaSquadSemTribo = respostaSquadSemTribo.data
     })
   }
 }
@@ -125,6 +98,8 @@ a {
 }
 .fundo {
   font-family: 'Kalam', cursive;
+  font-style: italic;
+  font-weight: bold;
   border-radius: 10px;
 }
 </style>
