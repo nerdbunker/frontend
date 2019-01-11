@@ -78,7 +78,7 @@ export default {
         { icon: 'home', title: 'Organismo', to: '/' },
         // { icon: 'loyalty', title: 'Valores', to: '/valores' },
         { icon: 'photo', title: 'Fotos da Viceri', to: '/viceri' },
-        { icon: 'folder', title: 'Documentos', to: '/documentos' },
+        // { icon: 'folder', title: 'Documentos', to: '/documentos' },
         { icon: 'info', title: 'Dúvidas', to: '/duvidas' },
         { icon: 'developer_mode', title: 'Suporte', to: '/suporte' },
         { icon: 'fingerprint', title: 'Entrar', to: '/entrar' }

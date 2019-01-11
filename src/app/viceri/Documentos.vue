@@ -47,8 +47,8 @@ export default {
       {
         name: '1. Sobre o Grupo Viceri e Handbook',
         children: [
-          { name: 'Handbook do Profissional', file: 'doc', to: '' },
-          { name: 'Manual da Organização', file: 'ppt', to: '' }
+          // { name: 'Handbook do Profissional', file: 'doc', to: require("../../../static/documentos/1-sobregrupoviceri/handbook-do-profissional.docx") },
+          // { name: 'Manual da Organização', file: 'ppt', to: require("../../static/documentos/1-sobregrupoviceri/manual-da-organizacao.pptx") }
         ]
       },
       {

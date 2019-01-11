@@ -30,7 +30,7 @@ export default {
     links: [
       { title: 'Fotos da Viceri', to: '/viceri' },
       { title: 'Dúvidas', to: '/duvidas' },
-      { title: 'Documentos', to: '/documentos' },
+      // { title: 'Documentos', to: '/documentos' },
       { title: 'Suporte', to: '/suporte' },
       { title: 'Entrar', to: '/entrar' }
     ],
