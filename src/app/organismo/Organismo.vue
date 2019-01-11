@@ -25,7 +25,7 @@
                 <!-- Titulo -->
                 <text
                   x="50%" y="50%" class="fundo"
-                  fill="black"
+                  fill="white"
                   dominant-baseline="middle" text-anchor="middle"
                   font-size="100%"
                 >
